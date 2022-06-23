@@ -9,9 +9,9 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 6198124569792911337L;
-	private static final int SCREEN_WIDTH = 750;
-	private static final int SCREEN_HEIGTH = 750;
-	private static final int CELL_SIZE = 25;
+	public static final int SCREEN_WIDTH = 896;
+	public static final int SCREEN_HEIGTH = 896;
+	public static final int CELL_SIZE = 32;
 	//Tabuleiro 30 por 30
 	private static final int DELAY = 25;
 	

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Montador {
 	
-	private static final int MAX = 30;
+	private static final int MAX = 28;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -11,12 +11,12 @@ public class Montador {
 
 	public Player createPlayer() {
 		// TODO Auto-generated method stub
-		return new Player();
+		return new Player(0, 0);
 	}
 
 	public ArrayList<Componente> createComponents() {
 		ArrayList<Componente> componentes = new ArrayList<Componente>();
-		componentes.add(new Energia(0, 0, 0));
+		componentes.add(new Energia(0, 0, 1));
 		return componentes;
 	}
 
