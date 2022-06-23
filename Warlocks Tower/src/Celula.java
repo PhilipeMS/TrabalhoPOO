@@ -1,4 +1,4 @@
 
-public class Celula {
+abstract public class Celula implements Interactable{
 
 }
