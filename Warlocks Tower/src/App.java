@@ -7,7 +7,7 @@ public class App {
 	private static void initWindow() {
 		JFrame window = new JFrame(TITLE);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		//Talvez adicionar o level na Dungeon, porem isso fica para o futuro
 		Dungeon dungeon = new Dungeon();
 		window.add(dungeon);
 		window.addKeyListener(dungeon);

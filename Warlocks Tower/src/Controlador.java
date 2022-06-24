@@ -30,6 +30,7 @@ public class Controlador {
 			break;
 		case KeyEvent.VK_E:
 			player.playerInteract();
+			break;
 		}
 			
 	}
