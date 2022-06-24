@@ -9,11 +9,10 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 6198124569792911337L;
-	public static final int SCREEN_WIDTH = 896;
-	public static final int SCREEN_HEIGTH = 896;
+	public static final int SCREEN_WIDTH = 640;
+	public static final int SCREEN_HEIGTH = 640;
 	public static final int CELL_SIZE = 32;
-	//Tabuleiro 30 por 30
-	private static final int DELAY = 25;
+	private static final int DELAY = 0;
 	
 	private Timer timer;
 	private Player player;
@@ -27,10 +26,11 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 		setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGTH));
 		setBackground(new Color(0, 0, 0));
 		
-		montador = new Montador();
-		controlador = new Controlador();
-		
+		montador = new Montador(this);
+
 		player = montador.createPlayer();
+		controlador = new Controlador(player);
+		
 		componentes = montador.createComponents();
 		celulas = montador.createCells();
 	
@@ -39,6 +39,14 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 		timer = new Timer(DELAY, this);
 		timer.start();
 		
+	}
+	
+	public Celula[][] getCells(){
+		return celulas;
+	}
+	
+	public ArrayList<Componente> getComponentes(){
+		return componentes;
 	}
 	
 	//KEY EVENTS
@@ -68,9 +76,6 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 		
 		cellsInteraction();
 		componentsInteraction();
-		
-		controlador.playerAction(componentes, celulas);
-		controlador.setPlayerActionNull();
 		
 		repaint();
 		

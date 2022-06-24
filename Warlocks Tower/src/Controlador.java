@@ -2,15 +2,36 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Controlador {
-
+	private Player player;
+	
+	public Controlador(Player player) {
+		this.player = player;
+	}
+	
 	public void setPlayer(Player player) {
-		// TODO Auto-generated method stub
-		
+		this.player = player;
 	}
 
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		int key = e.getKeyCode();
 		
+		switch(key) {
+		case KeyEvent.VK_W:
+			player.move(0, -1);
+			break;
+		case KeyEvent.VK_S:
+			player.move(0, 1);
+			break;
+		case KeyEvent.VK_A:
+			player.move(-1, 0);
+			break;
+		case KeyEvent.VK_D:
+			player.move(1, 0);
+			break;
+		case KeyEvent.VK_E:
+			player.playerInteract();
+		}
+			
 	}
 
 	public void playerAction(ArrayList<Componente> componentes, Celula[][] celulas) {

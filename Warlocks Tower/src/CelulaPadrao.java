@@ -6,22 +6,12 @@ public class CelulaPadrao extends Celula {
 	
 	private int x;
 	private int y;
+	private boolean passable;
 
 	public CelulaPadrao(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-
-	@Override
-	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		this.passable = true;
 	}
 
 	@Override
@@ -47,5 +37,7 @@ public class CelulaPadrao extends Celula {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 	
 }

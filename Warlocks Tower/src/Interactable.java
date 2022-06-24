@@ -5,11 +5,6 @@ import java.util.ArrayList;
 //Interface para as celulas e componentes
 public interface Interactable {
 	
-	//
-	public int getX();
-	//
-	public int getY();
-	
 	//Funcao tick impede do Player, componente ou celula estar onde nao deveria estar.
 	public void tick( Player player, ArrayList<Componente> componentes, Celula[][] celulas);
 	
