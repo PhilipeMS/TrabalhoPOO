@@ -38,16 +38,7 @@ public class Parede extends Celula{
 		// TODO Auto-generated method stub
 		
 	}
-	
 
-	
-
-
-	@Override
-	public void interactedByPlayer() {
-		// TODO Auto-generated method stub
-		
-	}
 	@Override
 	public boolean getPassable() {
 		// TODO Auto-generated method stub
@@ -56,6 +47,11 @@ public class Parede extends Celula{
 	@Override
 	public void setPassable(boolean passable) {
 		this.passable = passable;
+		
+	}
+	@Override
+	public void interactedByPlayer(Player player, ArrayList<Componente> componentes, Celula[][] celulas) {
+		// TODO Auto-generated method stub
 		
 	}
 

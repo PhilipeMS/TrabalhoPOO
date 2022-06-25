@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Energia extends Componente{
 	private int energiaqtd ;
 	
-	public Energia(int energia, int x, int y) {
+	public Energia(int x, int y, int energia) {
+		this.alive = true;
+		loadImage("images/moeda5.png");
 		this.energiaqtd = energia;
 		this.x = x;
 		this.y = y;
-		
-	
 	}
 
 	@Override
@@ -26,15 +26,16 @@ public class Energia extends Componente{
 	}
 
 	@Override
-	public void draw(Graphics g, ImageObserver observer) {
-		// TODO Auto-generated method stub
-		
+	public void interactedByPlayer(Player player, ArrayList<Componente> componentes, Celula[][] celulas) {
+		if(alive) {
+			player.setEnergy(player.getEnergy() + this.energiaqtd);
+			die();
+		}
 	}
-
-	@Override
-	public void interactedByPlayer() {
-		// TODO Auto-generated method stub
-		
+	
+	private void die() {
+		this.setAlive(false);
+		loadImage("images/dead.png");	
 	}
 
 

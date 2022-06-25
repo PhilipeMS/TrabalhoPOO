@@ -15,5 +15,5 @@ public interface Interactable {
 	public void draw(Graphics g, ImageObserver observer);
 	
 	//Funcao ativada caso algo seja interagido player 
-	public void interactedByPlayer();
+	public void interactedByPlayer(Player player, ArrayList<Componente> componentes, Celula[][] celulas);
 }

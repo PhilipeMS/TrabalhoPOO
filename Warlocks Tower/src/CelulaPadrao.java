@@ -4,10 +4,6 @@ import java.util.ArrayList;
 
 public class CelulaPadrao extends Celula {
 	
-	private int x;
-	private int y;
-	private boolean passable;
-
 	public CelulaPadrao(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -33,7 +29,7 @@ public class CelulaPadrao extends Celula {
 	}
 
 	@Override
-	public void interactedByPlayer() {
+	public void interactedByPlayer(Player player, ArrayList<Componente> componentes, Celula[][] celulas) {
 		// TODO Auto-generated method stub
 		
 	}

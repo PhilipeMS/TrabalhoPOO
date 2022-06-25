@@ -18,12 +18,12 @@ public class Montador {
 
 	public Player createPlayer() {
 		// TODO Auto-generated method stub
-		return new Player(0, 0, dungeon);
+		return new Player(1, 1, dungeon, 5);
 	}
 
 	public ArrayList<Componente> createComponents() {
 		ArrayList<Componente> componentes = new ArrayList<Componente>();
-		componentes.add(new Energia(0, 0, 1));
+		componentes.add(new Energia(2, 2, 5));
 		return componentes;
 	}
 

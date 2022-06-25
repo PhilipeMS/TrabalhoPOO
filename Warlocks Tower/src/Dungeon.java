@@ -112,11 +112,11 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 			}
 		}
 		
-		player.draw(g, this);
-		
 		for(Componente componente: componentes) {
 			componente.draw(g, this);
 		}
+		
+		player.draw(g, this);
 		
 		Toolkit.getDefaultToolkit().sync();
 	}
