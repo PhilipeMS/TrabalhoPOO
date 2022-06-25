@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+
 public class Player {
 	private int x;
 	private int y;
@@ -14,9 +15,11 @@ public class Player {
 	private BufferedImage image;
 	private Dungeon dungeon;
 	private int energia;
+	private boolean win;
 	
 	public Player(int x, int y, Dungeon dungeon, int energia) {
 		loadImage();
+		this.win = false;
 		this.energia = energia;
 		this.dungeon = dungeon;
 		this.x = x;
@@ -121,6 +124,14 @@ public class Player {
 	
 	public int getEnergy() {
 		return this.energia;
+	}
+	
+	public boolean getWin() {
+		return win;
+	}
+	
+	public void Win() {
+		this.win = true;
 	}
 
 }

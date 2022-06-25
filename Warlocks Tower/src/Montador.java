@@ -39,6 +39,8 @@ public class Montador {
 			}
 		}
 		
+		celulas[MAX_WIDTH-1][MAX_HEIGHT-1] = new Saida(MAX_WIDTH-1, MAX_HEIGHT-1);
+		
 		return celulas;
 	}
 

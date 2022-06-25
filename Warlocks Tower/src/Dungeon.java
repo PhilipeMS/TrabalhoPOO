@@ -77,8 +77,16 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 		cellsInteraction();
 		componentsInteraction();
 		
+		if(player.getWin()) {
+			this.dungeonConcluded();
+		}
+		
 		repaint();
 		
+	}
+	
+	public void dungeonConcluded() {
+		System.out.println("Você ganhou");
 	}
 	
 	public void cellsInteraction() {
