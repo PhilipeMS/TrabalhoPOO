@@ -7,17 +7,6 @@ import java.util.ArrayList;
 
 public class Montador {
 	
-	enum ComponentType {
-		ENERGIA,
-		ALAVANCA,
-		PORTA,
-	}
-	
-	enum CellType {
-		CELULAPADRAO,
-		SAIDA,;
-	}
-	
 	public static final int MAX_HEIGHT = (int)Dungeon.SCREEN_HEIGTH/Dungeon.CELL_SIZE;
 	public static final int MAX_WIDTH = (int)Dungeon.SCREEN_WIDTH/Dungeon.CELL_SIZE;
 	private Dungeon dungeon;
