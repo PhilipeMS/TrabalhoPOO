@@ -20,6 +20,7 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	
 	private BufferedReader levelsReader;
 	private int nivel;
+	private int nivelMaximo;
 	private Timer timer;
 	private Player player;
 	
@@ -29,10 +30,19 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	private Controlador controlador;
 	
 	private JLabel energyBoard;
-	private JLabel levelName;
 	
 	public Dungeon(int nivel) {
-		System.out.println("VOCE COMECOU");
+		loadLevels();
+		String s;
+		try {
+			if((s = levelsReader.readLine()) != null) {
+				this.nivelMaximo = Integer.parseInt(s);
+			}
+		} catch(Exception e) {
+			System.out.println("Arquivo levels.txt não inserido corretamente");
+			this.nivelMaximo = 1;
+		}
+
 		this.nivel = nivel;
 		setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGTH));
 		setBackground(new Color(0, 0, 0));
@@ -41,15 +51,13 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 		
 		//O Player, as Celulas e os Componentes devem ser instanciados nessa ordem.
 		player = montador.createPlayer();
-		celulas = montador.createCells();
 		componentes = montador.createComponents();
+		celulas = montador.createCells(componentes);
 		
 		controlador = new Controlador(player);
 		
 		energyBoard = new JLabel(""+player.getEnergy());
-		levelName = new JLabel(""+ this.nivel);
 		this.add(energyBoard);
-		this.add(levelName);
 		
 		timer = new Timer(DELAY, this);
 		timer.start();
@@ -116,18 +124,20 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	public void dungeonConcluded() {
-		this.nivel ++;
 		System.out.println("VOCE CONCLUIU A DUNGEON");
-		montador = new Montador(this);
+		if(this.nivel < this.nivelMaximo) {
+			this.nivel ++;
 
-		//O Player, as Celulas e os Componentes devem ser instanciados nessa ordem.
-		player = montador.createPlayer();
-		celulas = montador.createCells();
-		componentes = montador.createComponents();
-		
-		controlador = new Controlador(player);
-		
-		levelName = new JLabel(""+ this.nivel);
+			montador = new Montador(this);
+
+			//O Player, as Celulas e os Componentes devem ser instanciados nessa ordem.
+			player = montador.createPlayer();
+			componentes = montador.createComponents();
+			celulas = montador.createCells(componentes);
+			
+			controlador = new Controlador(player);
+			
+		}
 	}
 	
 	public void resetLevel() {
@@ -136,9 +146,8 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 
 		//O Player, as Celulas e os Componentes devem ser instanciados nessa ordem.
 		player = montador.createPlayer();
-		celulas = montador.createCells();
 		componentes = montador.createComponents();
-		
+		celulas = montador.createCells(componentes);
 		controlador = new Controlador(player);
 	}
 	
@@ -146,6 +155,7 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 		
 		for(Celula[] celulaArray: celulas) {
 			for(Celula celula: celulaArray) {
+				celula.tick(player, componentes, celulas);
 				celula.interact(player, componentes, celulas);
 			}
 		}

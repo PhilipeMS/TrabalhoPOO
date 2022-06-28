@@ -11,7 +11,7 @@ abstract public class Celula implements Interactable{
 	protected int x;
 	protected int y;
 	protected BufferedImage image;
-	protected boolean passable;
+	protected boolean passable = true;
 
 	public int getX() {
 		return x;

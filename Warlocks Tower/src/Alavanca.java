@@ -7,7 +7,7 @@ public class Alavanca extends Componente{
 	private ArrayList<Activable> ativaveis;
 	
 	public Alavanca(int x, int y, ArrayList<Activable> ativaveis) {
-		loadImage("images/alavancaParaCima.png");
+		loadImage("images/alavanca_para_cima.png");
 		this.x = x;
 		this.y = y;
 		this.puxada = false;
@@ -27,7 +27,13 @@ public class Alavanca extends Componente{
 
 	@Override
 	public void interactedByPlayer(Player player, ArrayList<Componente> componentes, Celula[][] celulas) {
-
+		this.puxada = !this.puxada;
+		if(this.puxada) {
+			loadImage("images/alavanca_para_baixo");
+		}else {
+			loadImage("images/alavanca_para_cima");
+		}
+		
 		for(Activable ativavel: ativaveis) {
 			System.out.println("fui ativada");
 			ativavel.setActivabled(!ativavel.getActivabled());

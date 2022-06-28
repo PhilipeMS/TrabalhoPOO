@@ -74,7 +74,7 @@ public class Player {
 			}
 		}
 		
-		if(this.energia <= 0) {
+		if(this.energia < 0) {
 			die();
 		}
 		
@@ -170,6 +170,15 @@ public class Player {
 	public void die() {
 		this.alive = false;
 		loadImage("images/playerdead.png");
+	}
+	
+	public Position getPastPosition() {
+		if(this.pastPositions.size() <= 0) {
+			return new Position(this.x, this.y);
+		}
+		else {
+			return this.pastPositions.get(this.pastPositions.size() - 1);
+		}
 	}
 
 }

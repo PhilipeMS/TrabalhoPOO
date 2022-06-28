@@ -22,6 +22,7 @@ public class Montador {
 	public static final int MAX_WIDTH = (int)Dungeon.SCREEN_WIDTH/Dungeon.CELL_SIZE;
 	private Dungeon dungeon;
 	private BufferedReader br;
+	private boolean badFormatFile = false;
 	
 	public Montador(Dungeon dungeon) {
 		this.dungeon = dungeon;
@@ -38,15 +39,7 @@ public class Montador {
 			
 		} catch (IOException e) {
 			
-			File exempleFile = new File("levels/exemplo.txt");
-			System.out.println(e.getMessage());
-			
-			try {
-				br = new BufferedReader(new FileReader(exempleFile));
-				
-			} catch (IOException e1) {
-				System.out.println(e1.getMessage());
-			}
+			this.badFormatFile = true;
 
 		}
 		
@@ -54,18 +47,15 @@ public class Montador {
 	
 	
 	private void fileBadFormat() {
-		File exempleFile = new File("levels/exemplo.txt");
 		System.out.println("Arquivo está com a formatacao errada");
-		
-		try {
-			br = new BufferedReader(new FileReader(exempleFile));
-			
-		} catch (IOException e1) {
-			System.out.println(e1.getMessage());
-		}
+		this.badFormatFile = true;
 	}
 	
 	public Player createPlayer() {
+		
+		if(this.badFormatFile) {
+			return new Player(0,0,dungeon,0);
+		}
 		
 		String[] st;
 		try {
@@ -109,6 +99,10 @@ public class Montador {
 
 	public ArrayList<Componente> createComponents() {
 		ArrayList<Componente> componentes = new ArrayList<Componente>();
+		
+		if(this.badFormatFile) {
+			return componentes;
+		}
 		String[] st;
 		String s;
 		try {
@@ -116,7 +110,7 @@ public class Montador {
 //				System.out.println(s);
 //			}
 			
-			while((s = br.readLine()) != null) {
+			while((s = br.readLine()) != null && !s.equals("END")) {
 				st = s.split(" ");
 				String ComponentName;
 				int x;
@@ -134,6 +128,7 @@ public class Montador {
 					y = Integer.parseInt(st[2]);
 					
 					if(ComponentName.equals("Energia")) {
+						
 						if(st.length == 4){
 							int energia;
 							try {
@@ -147,7 +142,9 @@ public class Montador {
 							System.out.println("Energia mal formatada");
 						}
 
-					}else if(ComponentName.equals("Alavanca")){
+					}
+					else if(ComponentName.equals("Alavanca")){
+						
 						if(st.length > 4) {
 							ArrayList<Activable> ativaveis = new ArrayList<Activable> ();
 							try {
@@ -156,7 +153,6 @@ public class Montador {
 									int m = Integer.parseInt(st[i+1]);
 									for(Componente componente: componentes) {
 										if(n == componente.x && m == componente.y) {
-											System.out.println("Adicionado");
 											ativaveis.add((Activable) componente);
 										}
 									}
@@ -172,7 +168,8 @@ public class Montador {
 						}
 						
 						
-					}else if(ComponentName.equals("Porta")) {
+					}
+					else if(ComponentName.equals("Porta")) {
 						
 						if(st.length == 4){
 							boolean aberta;
@@ -186,6 +183,12 @@ public class Montador {
 						}
 						
 					}
+					else if(ComponentName.equals("Caixa")) {
+						if(st.length == 3) {
+							componentes.add(new Caixa(x,y));
+						}
+					}
+
 					
 				} catch(Exception e){
 					System.out.println("x, y do componente devem ser inteiros");
@@ -204,17 +207,23 @@ public class Montador {
 		return componentes;
 	}
 
-	public Celula[][] createCells() {
+	public Celula[][] createCells(ArrayList<Componente> componentes) {
+		
+
 		
 		Celula[][] celulasBadFormat = new Celula[MAX_WIDTH][MAX_HEIGHT];
 		for(int i = 0; i < MAX_WIDTH; i++) {
 			for(int j = 0; j < MAX_HEIGHT; j++) {
-					celulasBadFormat[i][j] = new Parede(i, j);
+					celulasBadFormat[i][j] = new CelulaPadrao(i, j);
 			}
 		}
 		
 		celulasBadFormat[0][0] = new CelulaPadrao(0, 0);
 		celulasBadFormat[0][1] = new Saida(0, 1);
+		
+		if(this.badFormatFile) {
+			return celulasBadFormat;
+		}
 		
 		Celula[][] celulas = new Celula[MAX_WIDTH][MAX_HEIGHT];
 		for(int i = 0; i < MAX_WIDTH; i++) {
@@ -226,16 +235,17 @@ public class Montador {
 		celulas[0][0] = new CelulaPadrao(0, 0);
 	
 		
-		String[] st;
+		String s;
 		
 		try {
-			while((st = br.readLine().split(" ")) != null && !st[0].equals("END")) {
+			while((s = br.readLine()) != null && !s.equals("END")) {
+				String[] st = s.split(" ");
 				int x;
 				int y;
 				String cellName;
 				
-				if(st.length > 3 || st.length < 2) {
-					System.out.println("celula mal formatada");
+				if(st.length < 2) {
+					System.out.println("aaaaaaaaaaaa celula mal formatada");
 					fileBadFormat();
 					return celulasBadFormat;
 				}
@@ -247,6 +257,8 @@ public class Montador {
 					x = Integer.parseInt(st[0]);
 					y = Integer.parseInt(st[1]);
 					
+
+					
 				} catch(Exception e){
 					System.out.println("x, y da celula devem ser inteiros");
 					fileBadFormat();
@@ -255,6 +267,26 @@ public class Montador {
 				
 				if(cellName.equals("Saida")) {
 					celulas[x][y] = new Saida(x, y);
+				}
+				else if(cellName.equals("PisoAcionador")) {
+					ArrayList<Activable> ativaveis = new ArrayList<Activable> ();
+					try {
+						for(int i = 3; i < st.length; i += 2) {
+							int n = Integer.parseInt(st[i]);
+							int m = Integer.parseInt(st[i+1]);
+							for(Componente componente: componentes) {
+								if(n == componente.x && m == componente.y) {
+									ativaveis.add((Activable) componente);
+								}
+							}
+						}
+						
+						celulas[x][y] = new PisoAcionador(x,y,ativaveis);
+						
+					} catch(Exception e) {
+						System.out.println("Alavanca mal formatada");
+					}
+
 				}
 				else {
 					celulas[x][y] = new CelulaPadrao(x, y);

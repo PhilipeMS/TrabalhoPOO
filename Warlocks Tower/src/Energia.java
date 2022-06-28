@@ -7,7 +7,17 @@ public class Energia extends Componente{
 	
 	public Energia(int x, int y, int energia) {
 		this.alive = true;
-		loadImage("images/moeda5.png");
+		if(energia == 5) {
+			loadImage("images/energia5");
+		}
+		else if(energia == 3)
+		{
+			loadImage("images/enegia3");
+			
+		}else {
+			loadImage("images/energia_misterio");
+		}
+		
 		this.energiaqtd = energia;
 		this.x = x;
 		this.y = y;
