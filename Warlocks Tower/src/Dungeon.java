@@ -16,7 +16,7 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	public static final int SCREEN_WIDTH = 640;
 	public static final int SCREEN_HEIGTH = 640;
 	public static final int CELL_SIZE = 32;
-	private static final int DELAY = 75;
+	private static final int DELAY = 0;
 	
 	private BufferedReader levelsReader;
 	private int nivel;
@@ -65,7 +65,7 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	private void loadLevels() {
-		File file = new File("levels/levels.txt");
+		File file = new File("data/levels/levels.txt");
 		try {
 			levelsReader = new BufferedReader(new FileReader(file));
 		}catch(IOException e) {

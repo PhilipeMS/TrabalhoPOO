@@ -32,7 +32,7 @@ abstract public class Celula implements Interactable{
 	
 	protected void loadImage(String path) {
 		try {
-			image = ImageIO.read(new File(path));
+			image = ImageIO.read(new File("assets/" + path));
 		} catch (IOException e) {
 			System.out.println("Error opening player image file: " + e.getMessage());
 		}

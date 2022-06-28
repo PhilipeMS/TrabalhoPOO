@@ -19,7 +19,7 @@ public class Player {
 	private boolean alive;
 	
 	public Player(int x, int y, Dungeon dungeon, int energia) {
-		loadImage("images/player.jpg");
+		loadImage("assets/images/player.jpg");
 		this.alive = true;
 		this.win = false;
 		this.energia = energia;
@@ -169,7 +169,7 @@ public class Player {
 	
 	public void die() {
 		this.alive = false;
-		loadImage("images/playerdead.png");
+		loadImage("assets/images/playerdead.png");
 	}
 	
 	public Position getPastPosition() {

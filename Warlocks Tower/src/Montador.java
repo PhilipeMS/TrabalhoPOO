@@ -31,7 +31,7 @@ public class Montador {
 
 	private void readFile() {
 		
-		File file = new File("levels/" + dungeon.getLevel() + ".txt");
+		File file = new File("data/levels/" + dungeon.getLevel() + ".txt");
 		
 		try {
 			br = new BufferedReader(new FileReader(file));
