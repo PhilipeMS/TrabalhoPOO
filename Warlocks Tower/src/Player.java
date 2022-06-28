@@ -16,9 +16,11 @@ public class Player {
 	private Dungeon dungeon;
 	private int energia;
 	private boolean win;
+	private boolean alive;
 	
 	public Player(int x, int y, Dungeon dungeon, int energia) {
-		loadImage();
+		loadImage("images/player.jpg");
+		this.alive = true;
 		this.win = false;
 		this.energia = energia;
 		this.dungeon = dungeon;
@@ -41,6 +43,13 @@ public class Player {
 			return isValid;
 		}
 		
+		for(Componente componente: dungeon.getComponentes()) {
+			if(componente.x == this.x && componente.y == this.y && !componente.getPassable()) {
+				isValid = false;
+				return isValid;
+			}
+		}
+		
 		return isValid;
 	}
 	
@@ -58,13 +67,24 @@ public class Player {
 			this.y = pastPositions.get(pastPositions.size()-1).getY();
 		}
 		
+		for(Componente componente: dungeon.getComponentes()) {
+			if(componente.x == this.x && componente.y == this.y && !componente.getPassable()) {
+				this.x = pastPositions.get(pastPositions.size()-1).getX();
+				this.y = pastPositions.get(pastPositions.size()-1).getY();
+			}
+		}
+		
+		if(this.energia <= 0) {
+			die();
+		}
+		
 		
 	}
 	
 	
-	private void loadImage() {
+	private void loadImage(String path) {
 		try {
-			image = ImageIO.read(new File("images/player.jpg"));
+			image = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			System.out.println("Error opening player image file: " + e.getMessage());
 		}
@@ -93,6 +113,10 @@ public class Player {
 	
 	public void move(int deltaX, int deltaY) {
 		
+		if(!this.alive) {
+			return;
+		}
+		
 		if(!this.inValidPosition(this.x, this.y)){
 			return;
 		}
@@ -110,12 +134,21 @@ public class Player {
 	}
 	
 	public void playerInteract() {
+		
+		if(!this.alive) {
+			return;
+		}
+		
 		dungeon.getCells()[this.x][this.y].interactedByPlayer(this, dungeon.getComponentes(), dungeon.getCells());
 		for(Componente componente: dungeon.getComponentes()) {
 			if(componente.getX() == this.x && componente.getY() == this.y) {
 				componente.interactedByPlayer(this, dungeon.getComponentes(), dungeon.getCells());
 			}
 		}
+	}
+	
+	public void resetLevel() {
+		dungeon.resetLevel();
 	}
 	
 	public void setEnergy(int energy) {
@@ -132,6 +165,11 @@ public class Player {
 	
 	public void Win() {
 		this.win = true;
+	}
+	
+	public void die() {
+		this.alive = false;
+		loadImage("images/playerdead.png");
 	}
 
 }

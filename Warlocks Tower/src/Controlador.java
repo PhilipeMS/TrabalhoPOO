@@ -31,6 +31,9 @@ public class Controlador {
 		case KeyEvent.VK_E:
 			player.playerInteract();
 			break;
+		case KeyEvent.VK_P:
+			player.resetLevel();
+			break;
 		}
 			
 	}

@@ -15,13 +15,14 @@ abstract public class Componente implements Interactable{
 	protected int x;
 	protected int y;
 	protected BufferedImage image;
-	protected boolean alive;
+	protected boolean alive = true;
+	protected boolean passable = true;
 	
 	protected void loadImage(String path) {
 		try {
 			image = ImageIO.read(new File(path));
 		} catch (IOException e) {
-			System.out.println("Error opening player image file: " + e.getMessage());
+			System.out.println("Error opening " + path + " image file: " + e.getMessage());
 		}
 		
 	}
@@ -57,6 +58,16 @@ abstract public class Componente implements Interactable{
 	public void setAlive(boolean alive) {
 		this.alive = alive;
 	}
+	
+	
+	public boolean getPassable() {
+		return passable;
+	}
+
+	public void setPassable(boolean passable) {
+		this.passable = passable;
+	}
+	
 
 	
 	

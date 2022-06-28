@@ -1,5 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -12,8 +16,10 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	public static final int SCREEN_WIDTH = 640;
 	public static final int SCREEN_HEIGTH = 640;
 	public static final int CELL_SIZE = 32;
-	private static final int DELAY = 0;
+	private static final int DELAY = 75;
 	
+	private BufferedReader levelsReader;
+	private int nivel;
 	private Timer timer;
 	private Player player;
 	
@@ -22,23 +28,45 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 	private Montador montador;
 	private Controlador controlador;
 	
-	public Dungeon() {
+	private JLabel energyBoard;
+	private JLabel levelName;
+	
+	public Dungeon(int nivel) {
+		System.out.println("VOCE COMECOU");
+		this.nivel = nivel;
 		setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGTH));
 		setBackground(new Color(0, 0, 0));
-		
+	
 		montador = new Montador(this);
-
+		
+		//O Player, as Celulas e os Componentes devem ser instanciados nessa ordem.
 		player = montador.createPlayer();
+		celulas = montador.createCells();
+		componentes = montador.createComponents();
+		
 		controlador = new Controlador(player);
 		
-		componentes = montador.createComponents();
-		celulas = montador.createCells();
-	
-		controlador.setPlayer(player);
+		energyBoard = new JLabel(""+player.getEnergy());
+		levelName = new JLabel(""+ this.nivel);
+		this.add(energyBoard);
+		this.add(levelName);
 		
 		timer = new Timer(DELAY, this);
 		timer.start();
 		
+	}
+	
+	private void loadLevels() {
+		File file = new File("levels/levels.txt");
+		try {
+			levelsReader = new BufferedReader(new FileReader(file));
+		}catch(IOException e) {
+			System.out.println("Os niveis não puderam ser carregados");
+		}
+	}
+	
+	public int getLevel() {
+		return this.nivel;
 	}
 	
 	public Celula[][] getCells(){
@@ -81,12 +109,37 @@ public class Dungeon extends JPanel implements ActionListener, KeyListener{
 			this.dungeonConcluded();
 		}
 		
+		energyBoard.setText(""+ player.getEnergy());
+		
 		repaint();
 		
 	}
 	
 	public void dungeonConcluded() {
-		System.out.println("Você ganhou");
+		this.nivel ++;
+		System.out.println("VOCE CONCLUIU A DUNGEON");
+		montador = new Montador(this);
+
+		//O Player, as Celulas e os Componentes devem ser instanciados nessa ordem.
+		player = montador.createPlayer();
+		celulas = montador.createCells();
+		componentes = montador.createComponents();
+		
+		controlador = new Controlador(player);
+		
+		levelName = new JLabel(""+ this.nivel);
+	}
+	
+	public void resetLevel() {
+
+		montador = new Montador(this);
+
+		//O Player, as Celulas e os Componentes devem ser instanciados nessa ordem.
+		player = montador.createPlayer();
+		celulas = montador.createCells();
+		componentes = montador.createComponents();
+		
+		controlador = new Controlador(player);
 	}
 	
 	public void cellsInteraction() {
