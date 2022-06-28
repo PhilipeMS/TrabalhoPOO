@@ -34,7 +34,7 @@ abstract public class Celula implements Interactable{
 		try {
 			image = ImageIO.read(new File("assets/" + path));
 		} catch (IOException e) {
-			System.out.println("Error opening player image file: " + e.getMessage());
+			System.out.println("Error opening cell image file: " + e.getMessage());
 		}
 		
 	}

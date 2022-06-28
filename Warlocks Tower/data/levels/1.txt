@@ -1,6 +1,6 @@
-Player 0 0 12
+Player 5 5 2
 END
-0 0 CelulaPadrao
-0 1
-0 2 Saida
+5 5 CelulaPadrao
+5 6
+5 7 Saida
 END

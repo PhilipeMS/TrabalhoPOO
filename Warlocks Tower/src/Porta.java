@@ -7,7 +7,7 @@ public class Porta extends Componente implements Activable{
 		this.x = x;
 		this.y = y;
 		this.passable = passable;
-		if(this.passable) {
+		if(!this.passable) {
 			loadImage("images/porta_aberta.png");
 		}
 		else {
@@ -43,7 +43,7 @@ public class Porta extends Componente implements Activable{
 	public void setActivabled(boolean activabled) {
 		this.passable = activabled;
 		
-		if(this.passable) {
+		if(!this.passable) {
 			loadImage("images/porta_aberta.png");
 		}
 		else {

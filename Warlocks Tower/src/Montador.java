@@ -221,7 +221,6 @@ public class Montador {
 			}
 		}
 		
-		celulas[0][0] = new CelulaPadrao(0, 0);
 	
 		
 		String s;

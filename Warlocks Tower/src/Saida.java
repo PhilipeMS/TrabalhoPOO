@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Saida extends Celula{
 
 	public Saida(int x, int y) {
+		loadImage("images/saida.png");
 		this.x = x;
 		this.y = y;
 		this.passable = true;
